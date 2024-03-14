@@ -1,5 +1,5 @@
 from models import User
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_restx import Api, Resource, Namespace, fields
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -33,7 +33,6 @@ class SignUp(Resource):
     @auth_ns.expect(signup_modal)
     def post(self):
         data = request.get_json()
-        
         username=data.get('username')
         db_user=User.query.filter_by(username=username).first()
         if db_user is not None:
@@ -47,7 +46,7 @@ class SignUp(Resource):
         
         new_user.save()
         
-        return jsonify({"message":"User is created successfully."})
+        return make_response(jsonify({"message":"User is created successfully."}),201)
     
     
 @auth_ns.route('/login')

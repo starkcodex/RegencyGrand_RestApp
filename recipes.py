@@ -65,7 +65,6 @@ class RecipeResource(Resource):
         
         return recipe
 
-
     @recipe_ns.marshal_with(recipe_modal)
     @jwt_required()
     def put(self, id):
